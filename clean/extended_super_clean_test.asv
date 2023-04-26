@@ -8,16 +8,20 @@ B0 = [1 0; 0 0; 0 1];
 ss = struct('A', A0, 'B', B0)
 % ss.A = 1.5*ss.A;
 
-K = sdpvar(m, n);
+v = sdpvar(n, 1);
+S = sdpvar(m, n);
 
-Acl = ss.A+ss.B*K;
+Y = diag(v);
+
+% Acl = ss.A+ss.B*K;
+Acl = ss.A*Y + ss.B*S;
 M = sdpvar(n, n);
 delta = 1e-2;
-cons = [M(:)- Acl(:) >=0 ; M(:) +Acl(:)>= 0; sum(M, 2) <= (1-delta)];
+cons = [M(:)- Acl(:) >=0 ; M(:) +Acl(:)>= 0; sum(M, 2) <= (1-delta); v>=delta; sum(v)==1];
 opts = sdpsettings;
 sol = optimize(cons, [], opts);
 
 %% recovery
 Mr = value(M);
-Kr = value(K);
+Sr = value(S);
 Aclr = value(Acl);
