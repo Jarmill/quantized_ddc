@@ -52,7 +52,7 @@ Xp_sub = replace(Xp_curr, [A(:); B(:)], [A0(:); B0(:)]);
 
 rob_vars = [A(:); B(:)];
 M0 = sdpvar(n, n);
-Ma = cell(length(rob_vars));
+Ma = cell(length(rob_vars), 1);
 
 %affine adjustable robust counterpart
 M = M0;
@@ -107,6 +107,6 @@ Mr = value(M_rep);
 Sr = value(S);
 vr = value(v);
 % Aclr = value(Acl);
-Aclr0 = value(A0 + B0*Kr);
+Aclr0 = value(A0 + B0*K);
 Aclr_low = value(A0 + (1-delta)*B0*Kr);
 Aclr_high = value(A0 + (1+delta)*B0*Kr);

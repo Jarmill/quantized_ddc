@@ -93,4 +93,4 @@ Mr = value(M_rep);
 Sr = value(S);
 vr = value(v);
 % Aclr = value(Acl);
-Aclr0 = value(A0 + B0*Kr);
+Aclr0 = value(A0 + B0*K);
