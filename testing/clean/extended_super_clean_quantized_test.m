@@ -1,11 +1,21 @@
-rng(20, 'twister')
+
+rng(30, 'twister')
+% n = 4;
+% m = 3;
+
 n = 3;
 m = 2;
-% ss = rss(n, n, m);
-A0 = 0.9*eye(3)+ 0.2*ones(3);
-% A0(3, 2) = 2;
-B0 = [1 0; 0 1; 0 1];
-ss = struct('A', A0, 'B', B0)
+ss = drss(n, n, m);
+% A0 = ss.A + 0.1*eye(n);
+ss.A = ss.A*1.5;
+% rng(20, 'twister')
+% n = 3;
+% m = 2;
+% % ss = rss(n, n, m);
+% A0 = 0.9*eye(3)+ 0.2*ones(3);
+% % A0(3, 2) = 2;
+% B0 = [1 0; 0 1; 0 1];
+% ss = struct('A', A0, 'B', B0)
 % ss.A = 1.5*ss.A;
 
 %perform logarithmic quantization with level q
