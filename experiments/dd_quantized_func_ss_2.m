@@ -70,16 +70,43 @@ sim.Sb =  Sb;
 
 %run the quantizer
 
+%rho should be less than 1?
 % rho = 1.3;
 % rho = 1.5;
-rho = 1.4;
+% rho = 1.4;
 % rho = 1.05;
+% rho = 0.7;
+
+
+Nrho = 100;
+rho_list = linspace(0.1, 1, Nrho);
+lam_list = zeros(Nrho, 1);
+% rho = 0.3;
+for i = 1:length(rho_list)
 
 % out = SS_quantized(sim, rho);
-out = SS_quantized_sign(sim, rho);
+    out = SS_quantized_sign(sim, rho_list(i));
+    if out.problem
+        lam_list(i) = inf;
+    else
+        lam_list(i) = out.obj;
+    end
+end
 % out = ESS_quantized_sign(sim, rho);
 
 if out.problem==0
     K_rec = out.K;
     lam_rec = out.obj;
 end
+
+
+%%  plot the result
+figure, 
+hold on
+plot(rho_list, lam_list', 'linewidth', 2)
+plot(xlim, [1, 1], '--k','linewidth', 2)
+ylim([0, max(lam_list)])
+legend({'T=80', '\lambda=1'}, 'location', 'southwest')
+xlabel('Quantization $\rho$', 'interpreter', 'latex')
+ylabel('Gain $\lambda$', 'interpreter', 'latex')
+title('Superstability Gain vs. Quantization')
