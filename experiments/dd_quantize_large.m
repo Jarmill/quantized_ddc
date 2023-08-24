@@ -7,11 +7,12 @@ rng(30, 'twister')
 %   N_r increases (more buckets)
 %   T increases (more data)
 
-n = 3;
-m = 2;
+n = 14;
+m = 7;
+[imat, jmat] = meshgrid(1:n, 1:n);
 
-A0 = [-0.130044145839941,-0.397448693430848,0.202989496636112;-0.397448693430849,-0.499993279171062,0.299032700527649;0.202989496636112,0.299032700527648,-0.526192583398200];
-B0 = [0.217864167978751,1.279977824637024;0.359211320717385,0;-1.155284985838844,0];
+A0 = (1/n)*min(imat./jmat, jmat./imat) + 0.5*eye(n);
+B0 = eye(n, m);
 
 % ss = drss(n, n, m);
 % A0 = ss.A + 0.1*eye(n);
@@ -32,10 +33,10 @@ B0 = [0.217864167978751,1.279977824637024;0.359211320717385,0;-1.155284985838844
 %% sample data
 
 % T = 60;
-T = 80;
+% T = 80;
 % T = 100;
 % T = 120;
-% T = 200;
+T = 200;
 % T = 400;
 % T = 90;
 umax = 10;
@@ -71,33 +72,29 @@ sim.Sb =  Sb;
 %run the quantizer
 
 %rho should be less than 1?
-% rho = 1.3;
-% rho = 1.5;
-% rho = 1.4;
-% rho = 1.05;
-% rho = 0.7;
+
+rho = 0.8;
+
+out = ESS_quantized(sim, rho);
 
 
-Nrho = 100;
-rho_list = linspace(0.1, 1, Nrho);
-lam_list = zeros(Nrho, 1);
-% rho = 0.3;
-for i = 1:length(rho_list)
-
-% out = SS_quantized(sim, rho);
-    out = SS_quantized_sign(sim, rho_list(i));
-    if out.problem
-        lam_list(i) = inf;
-    else
-        lam_list(i) = out.obj;
-    end
-end
-% out = ESS_quantized_sign(sim, rho);
-
-if out.problem==0
-    K_rec = out.K;
-    lam_rec = out.obj;
-end
-
-
-% plot the resu
+% Nrho = 100;
+% rho_list = linspace(0.1, 1, Nrho);
+% lam_list = zeros(Nrho, 1);
+% % rho = 0.3;
+% for i = 1:length(rho_list)
+% 
+% % out = SS_quantized(sim, rho);
+%     out = SS_quantized_sign(sim, rho_list(i));
+%     if out.problem
+%         lam_list(i) = inf;
+%     else
+%         lam_list(i) = out.obj;
+%     end
+% end
+% % out = ESS_quantized_sign(sim, rho);
+% 
+% if out.problem==0
+%     K_rec = out.K;
+%     lam_rec = out.obj;
+% end

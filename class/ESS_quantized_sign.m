@@ -1,11 +1,15 @@
-function [out] = ESS_quantized_sign(sim, rho)
+function [out] = ESS_quantized_sign(sim, rho, sys)
 %SS_Quantized superstabilizing control for quantized linear systems
 % use affine-adjustable robust counterparts
 
 %process the input
 
-n = size(sim.X, 1);
-m = size(sim.U, 1);
+if nargin < 3
+    n = size(sim.X, 1);
+    m = size(sim.U, 1);
+else
+    [n, m] = size(sys.B); 
+end
 
 if length(rho) == 1
     rho = ones(m, 1)*rho;
@@ -17,10 +21,16 @@ q = (1-rho)./(1+rho);
 %declare the variables
 
 %uncertain (temporary)
-A = sdpvar(n, n, 'full');
-B = sdpvar(n, m, 'full');
-rob_vars = [A(:); B(:)];
-
+if nargin < 3
+    ROBUST = 1;
+    A = sdpvar(n, n, 'full');   
+    B = sdpvar(n, m, 'full');
+    rob_vars = [A(:); B(:)];
+else
+    ROBUST = 0;
+    A = sys.A;
+    B = sys.B;
+end
 
 
 %design parameters
@@ -56,6 +66,7 @@ end
 
 %data processing
 
+if ROBUST
 Xp_curr = A*sim.X + B*sim.U;
 
 dd_term = [];
@@ -72,9 +83,14 @@ for i = 1:Nbucket
 end
 dd_con = (dd_term>=0);
 
+rob_con = uncertain(rob_vars);
+else
+    dd_con = [];
+    rob_con = [];
+end
 
-cons = [dd_con:'data'; lambda>=v; v>=1e-3;sum(v)==1;...
-    ss_cons:'Sign-Superstability'; uncertain(rob_vars)];
+cons = [dd_con; lambda>=v; v>=1e-3;sum(v)==1;...
+    ss_cons:'Sign-Superstability'; rob_con];
 
 %solve the program
 opts = sdpsettings('robust.lplp', 'duality');
