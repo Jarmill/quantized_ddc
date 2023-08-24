@@ -1,4 +1,4 @@
-function [out] = SS_quantized(sim, rho)
+function [out] = ESS_quantized(sim, rho)
 %ESS_Quantized extended superstabilizing control for quantized linear systems
 % use affine-adjustable robust counterparts
 
@@ -76,7 +76,7 @@ for i = 1:Nbucket
 end
 dd_con = (dd_term>=0);
 
-v_con = [v>=delta; sum(v)==1];
+v_con = [v>=delta; lambda >= v];
 cons = [v_con:'v'; dd_con:'data'; lam_cons:'objective'; ...
     ss_cons:'M bounding'; uncertain(rob_vars)];
 
