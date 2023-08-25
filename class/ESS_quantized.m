@@ -60,7 +60,18 @@ end
 
 %data processing
 
-[C, d] = data_cons_bucket(sim, 1);
+% [C, d] = data_cons_bucket(sim, 1);
+
+%get rid of this, only for rapit prototyping on the minij example
+MINIJ = 1;
+if MINIJ
+    load('data_minij_14_7.mat', 'C_red', 'd_red');
+    C = C_red;
+    d = d_red;
+else
+    [C, d] = data_cons_bucket(sim, 1);
+end
+
 dd_con = [C*rob_vars <= d];
 
 % Xp_curr = A*sim.X + B*sim.U;
