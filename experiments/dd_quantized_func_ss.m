@@ -13,7 +13,8 @@ ss = struct('A', A0, 'B', B0);
 
 %% sample data
 
-T = 60;
+% T = 60;
+T = 80;
 % T = 120;
 % T = 200;
 % T = 400;
@@ -49,14 +50,11 @@ sim.Sb =  Sb;
 
 %run the quantizer
 
-% rho = 1.3;
-rho = 1.8;
-% rho = 1.3;
-% rho = 1.05;
+rho = 0.8;
 
 % out = SS_quantized(sim, rho);
-out = SS_quantized_sign(sim, rho);
-% out = ESS_quantized(sim, rho);
+% out = SS_quantized_sign(sim, rho);
+out = ESS_quantized_sign(sim, rho);
 
 if out.problem==0
     K_rec = out.K;

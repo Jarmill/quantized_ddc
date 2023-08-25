@@ -60,21 +60,24 @@ end
 
 %data processing
 
-Xp_curr = A*sim.X + B*sim.U;
+[C, d] = data_cons_bucket(sim, 1);
+dd_con = [C*rob_vars <= d];
 
-dd_term = [];
-Nbucket = size(sim.buckets, 1);
-for i = 1:Nbucket
-    if sim.buckets(i, 1) > -inf
-        dd_low = Xp_curr - sim.buckets(i, 1);
-        dd_term = [dd_term; dd_low(sim.Sb{i})];
-    end
-    if sim.buckets(i, 2) < inf
-        dd_high = (sim.buckets(i, 2) - Xp_curr);
-        dd_term = [dd_term; dd_high(sim.Sb{i})];
-    end
-end
-dd_con = (dd_term>=0);
+% Xp_curr = A*sim.X + B*sim.U;
+% 
+% dd_term = [];
+% Nbucket = size(sim.buckets, 1);
+% for i = 1:Nbucket
+%     if sim.buckets(i, 1) > -inf
+%         dd_low = Xp_curr - sim.buckets(i, 1);
+%         dd_term = [dd_term; dd_low(sim.Sb{i})];
+%     end
+%     if sim.buckets(i, 2) < inf
+%         dd_high = (sim.buckets(i, 2) - Xp_curr);
+%         dd_term = [dd_term; dd_high(sim.Sb{i})];
+%     end
+% end
+% dd_con = (dd_term>=0);
 
 v_con = [v>=delta; lambda >= v];
 cons = [v_con:'v'; dd_con:'data'; lam_cons:'objective'; ...
