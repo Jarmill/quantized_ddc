@@ -18,7 +18,8 @@ q = (1-rho)./(1+rho);
 %declare the variables
 
 %design parameters
-v = sdpvar(n, 1);
+% v = sdpvar(n, 1);
+v = ones(n, 1);
 S = sdpvar(m, n);
 
 Y = diag(v);
@@ -34,7 +35,7 @@ signs = 2*ff2n(m)-1;
 
 %start up constraint generation
 delta = 1e-3;
-lam_cons = [sum(M, 2) <= (v - delta)];
+lam_cons = [sum(M, 2) <= (lambda - delta)];
 
 %iterate over all sign patterns
 I = eye(m);
@@ -52,8 +53,8 @@ end
 %data processing
 
 
-v_con = [v>=delta; lambda >= v; v==1];
-cons = [v_con:'v';  lam_cons:'objective'; ...
+% v_con = [v>=delta; v == lambda];
+cons = [lam_cons:'objective'; ...
     ss_cons:'M bounding'];
 
 %solve the program
@@ -69,7 +70,7 @@ if sol.problem ==0
     out.S = value(S);
     out.v = value(v);
     out.K = out.S*diag(1./out.v);
-    out.obj = 0;
+    out.obj = value(lambda);
     
     out.M0 = value(M0);
 %     out.Ma = cellfun(@(m) value(m), Ma, 'UniformOutput', false);

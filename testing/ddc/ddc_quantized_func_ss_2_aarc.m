@@ -12,6 +12,7 @@ m = 2;
 
 A0 = [-0.130044145839941,-0.397448693430848,0.202989496636112;-0.397448693430849,-0.499993279171062,0.299032700527649;0.202989496636112,0.299032700527648,-0.526192583398200];
 B0 = [0.217864167978751,1.279977824637024;0.359211320717385,0;-1.155284985838844,0];
+ss = struct('A', A0, 'B', B0);
 
 % ss = drss(n, n, m);
 % A0 = ss.A + 0.1*eye(n);
@@ -80,8 +81,10 @@ sim.Sb =  Sb;
 % rho = 0.20801; %ESS: T = 100
 
 %aarc formulation
-rho = 0.9500; % SS: T = 100
+% rho = 0.9500; % SS: T = 100
 % rho = 0.7723; %ESS: T=100;
+
+% rho = 0.1422; %ESS clean
 
 % 
 % Nrho = 100;
@@ -90,10 +93,12 @@ rho = 0.9500; % SS: T = 100
 % % rho = 0.3;
 % for i = 1:length(rho_list)
 
+out = ESS_quantized_clean_aff(rho, sys);
+
 % out = SS_quantized_sign(sim, rho);
 % out = ESS_quantized_sign(sim, rho);
 % out = ESS_quantized(sim, rho);
-out = SS_quantized(sim, rho);
+% out = SS_quantized(sim, rho);
 %     out = SS_quantized_sign(sim, rho_list(i));
 %     if out.problem
 %         lam_list(i) = inf;

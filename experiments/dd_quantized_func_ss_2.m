@@ -13,6 +13,7 @@ m = 2;
 A0 = [-0.130044145839941,-0.397448693430848,0.202989496636112;-0.397448693430849,-0.499993279171062,0.299032700527649;0.202989496636112,0.299032700527648,-0.526192583398200];
 B0 = [0.217864167978751,1.279977824637024;0.359211320717385,0;-1.155284985838844,0];
 
+sys = struct('A', A0, 'B', B0);
 % ss = drss(n, n, m);
 % A0 = ss.A + 0.1*eye(n);
 % ss.A = ss.A*1.4;
@@ -85,7 +86,8 @@ lam_list = zeros(Nrho, 1);
 for i = 1:length(rho_list)
 
 % out = SS_quantized(sim, rho);
-    out = SS_quantized_sign(sim, rho_list(i));
+%     out = SS_quantized_sign(sim, rho_list(i));
+    out = SS_quantized_clean_aff(rho_list(i), sys);
     if out.problem
         lam_list(i) = inf;
     else
@@ -106,9 +108,10 @@ hold on
 plot(rho_list, lam_list_60', 'linewidth', 2)
 plot(rho_list, lam_list_80', 'linewidth', 2)
 plot(rho_list, lam_list_100', 'linewidth', 2)
+plot(rho_list, lam_list_clean', 'linewidth', 2)
 plot(xlim, [1, 1], '--k','linewidth', 2)
-ylim([0, max(lam_list)])
-legend({'T=60', 'T=80', 'T=100', '\lambda=1'}, 'location', 'southwest')
+ylim([0, max(lam_list_80)])
+legend({'T=60', 'T=80', 'T=100', 'truth', '\lambda=1'}, 'location', 'southwest')
 xlabel('Quantization $\rho$', 'interpreter', 'latex')
 ylabel('Gain $\lambda$', 'interpreter', 'latex')
 title('Superstability Gain vs. Quantization', 'FontSize', 16)

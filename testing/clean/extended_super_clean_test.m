@@ -5,7 +5,7 @@ m = 2;
 A0 = 0.9*eye(3)+ 0.2*ones(3);
 % A0(3, 2) = 2;
 B0 = [1 0; 0 1; 0 1];
-ss = struct('A', A0, 'B', B0)
+ss = struct('A', A0, 'B', B0);
 % ss.A = 1.5*ss.A;
 
 v = sdpvar(n, 1);
