@@ -7,8 +7,15 @@ rng(30, 'twister')
 %   N_r increases (more buckets)
 %   T increases (more data)
 
-n = 14;
-m = 7;
+%large model runs out of memory in MATLAB
+%requires on the order of 432 GB
+% n = 14;
+% m = 7;
+
+
+%medium size
+n = 8;
+m = 4;
 [imat, jmat] = meshgrid(1:n, 1:n);
 
 A0 = (1/n)*min(imat./jmat, jmat./imat) + 0.5*eye(n);
@@ -36,8 +43,8 @@ B0 = eye(n, m);
 % T = 80;
 % T = 100;
 % T = 120;
-% T = 200;
-T = 350;
+T = 200;
+% T = 350;
 % T = 400;
 % T = 90;
 umax = 10;
