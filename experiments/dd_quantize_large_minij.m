@@ -14,11 +14,14 @@ rng(30, 'twister')
 
 
 %medium size
-n = 8;
-m = 4;
+% n = 8;
+% m = 4;
+
+n=6;
+m=3;
 [imat, jmat] = meshgrid(1:n, 1:n);
 
-A0 = (1/n)*min(imat./jmat, jmat./imat) + 0.5*eye(n);
+A0 = (1/n)*min(imat./jmat, jmat./imat) + 0.45*eye(n);
 B0 = eye(n, m);
 
 % ss = drss(n, n, m);
@@ -43,7 +46,7 @@ B0 = eye(n, m);
 % T = 80;
 % T = 100;
 % T = 120;
-T = 200;
+% T = 200;
 % T = 350;
 % T = 400;
 % T = 90;

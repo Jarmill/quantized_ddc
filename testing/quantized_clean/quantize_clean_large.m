@@ -1,13 +1,22 @@
 rng(20, 'twister')
-% n = 8;
-% m = 5;
-n = 14;
-m = 7;
+
+%rho = 0.5;
+n = 8;
+m = 4;
+
+%rho = 0.6;
+n = 6;
+m = 3;
+
+
+
+% n = 14;
+% m = 7;
 % ss = rss(n, n, m);
 % A0 = eye(n)*1-ones(n)*0.2;
 [imat, jmat] = meshgrid(1:n, 1:n);
 
-A0 = (1/n)*min(imat./jmat, jmat./imat) + 0.5*eye(n);
+A0 = (1/n)*min(imat./jmat, jmat./imat) + 0.45*eye(n);
 
 % A0 = -0.8*eye(n) + ones(n)*0.1;
 % A0 = 1./gallery('minij',n);
@@ -31,7 +40,7 @@ out = ESS_quantized_clean_aff(rho, ss);
 if ~out.problem
 
     Acl_out = ss.A + ss.B * out.K;
-    eig(Acl_out)'
+    [eig(Acl_out), eig(A0)]'
 else
     eig(A0)'
 end
