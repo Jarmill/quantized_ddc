@@ -38,7 +38,7 @@ for i = 1:length(rob_vars)
     M = M +  Ma{i}*rob_vars(i);
 end
 
-signs = 2*ff2n(m)-1;
+
 
 
 %start up constraint generation
@@ -46,6 +46,12 @@ delta = 1e-3;
 lam_cons = [sum(M, 2) <= (v - delta)];
 
 %iterate over all sign patterns
+
+if all(q==0)
+    signs = ones(1, m);
+else
+    signs = 2*ff2n(m)-1;
+end
 I = eye(m);
 ss_cons = [];
 for i = 1:size(signs, 1)

@@ -17,7 +17,7 @@ rng(30, 'twister')
 % n = 8;
 % m = 4;
 
-n=6;
+n=5;
 m=3;
 [imat, jmat] = meshgrid(1:n, 1:n);
 
@@ -47,8 +47,10 @@ B0 = eye(n, m);
 % T = 100;
 % T = 120;
 % T = 200;
-% T = 350;
+% T = 300;
+T = 350;
 % T = 400;
+% T = 450;
 % T = 90;
 umax = 10;
 Xn = 2*rand(n, T)-1;
@@ -59,9 +61,19 @@ Xp = A0*Xn + B0*U;
 % buckets = [-inf, -1; -1, 0; 0, 1; 1, inf];
 % buckets = 
 
-B_r = 4;
+
+%n=5, m=3, T = 350, rho=1. works
+% rho = 1;
+B_r = 6;
+N_r = 25;
+
+
+% B_r = 8;
+% N_r = 17;
+% N_r = 21;
+% B_r = 4;
 % N_r = 11;
-N_r = 9;
+% N_r = 9;
 % N_r = 6;
 
 
@@ -84,6 +96,8 @@ sim.Sb =  Sb;
 
 %rho should be less than 1?
 
+% rho = 0.75;
+% rho = 1;
 rho = 0.8;
 
 out = ESS_quantized(sim, rho);

@@ -5,7 +5,7 @@ n = 8;
 m = 4;
 
 %rho = 0.6;
-n = 6;
+n = 5;
 m = 3;
 
 
@@ -29,7 +29,8 @@ B0 = eye(n, m);
 % B0 = [0 0 ; 1 0; 0 1];
 ss = struct('A', A0, 'B', B0);
 
-rho = 0.6;
+rho = 0.25;
+% rho = 0.001;
 
 % out = ESS_quantized_sign([], rho, ss);
 % out = ESS_quantized_clean_aff(rho, ss);
