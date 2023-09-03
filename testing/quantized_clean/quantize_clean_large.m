@@ -29,7 +29,8 @@ B0 = eye(n, m);
 % B0 = [0 0 ; 1 0; 0 1];
 ss = struct('A', A0, 'B', B0);
 
-rho = 0.25;
+% rho = 0.25;
+rho = 0.2245;
 % rho = 0.001;
 
 % out = ESS_quantized_sign([], rho, ss);

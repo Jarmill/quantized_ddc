@@ -100,7 +100,8 @@ sim.Sb =  Sb;
 % rho = 1;
 rho = 0.8;
 
-out = ESS_quantized(sim, rho);
+% out = ESS_quantized(sim, rho);
+out = ESS_quantized_sign(sim, rho);
 
 
 % Nrho = 100;
