@@ -1,3 +1,5 @@
+%example 2 in the paper
+
 rng(30, 'twister')
 
 %a working example for superstability:
@@ -14,11 +16,11 @@ rng(30, 'twister')
 
 
 %medium size
-n = 8;
-m = 5;
+% n = 8;
+% m = 4;
 
-% n=5;
-% m=3;
+n=5;
+m=3;
 [imat, jmat] = meshgrid(1:n, 1:n);
 
 A0 = (1/n)*min(imat./jmat, jmat./imat) + 0.45*eye(n);
@@ -48,11 +50,9 @@ B0 = eye(n, m);
 % T = 120;
 % T = 200;
 % T = 300;
-% T = 350;
+T = 350;
 % T = 400;
 % T = 450;
-
-T = 700;
 % T = 90;
 umax = 10;
 Xn = 2*rand(n, T)-1;
@@ -102,8 +102,8 @@ sim.Sb =  Sb;
 % rho = 1;
 rho = 0.8;
 
-out = ESS_quantized(sim, rho);
-% out = ESS_quantized_sign(sim, rho);
+% out = ESS_quantized(sim, rho);
+out = ESS_quantized_sign(sim, rho);
 
 
 % Nrho = 100;

@@ -1,3 +1,5 @@
+%example 1 in the paper
+
 rng(20, 'twister')
 n = 3;
 m = 2;
